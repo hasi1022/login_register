@@ -4,7 +4,7 @@ const user=sequelize.define("user",{
       user_id:{
         type:DataTypes.INTEGER,
         primaryKey:true,
-        autoIncremeant:true
+        autoIncrement:true
       },
       user_name:{
         type:DataTypes.STRING,

@@ -5,9 +5,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import router from "./routes/router.js";
+import multer from "multer";
+const upload=multer();
+
 const app=express();
+app.use(upload.none())
 app.use(express.json())
 app.use(cors())
+app.use(express.urlencoded({extended:true}))
 app.use('/task',router)
 sequelize.sync().then(()=>{
     console.log("connected to database")
