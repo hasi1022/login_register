@@ -1,0 +1,14 @@
+<div class="card">
+<h3>Registration</h3>
+<div id="form">
+<form #f="ngForm" (ngSubmit)="onsubmit()" >
+username : <input name="user_name" [(ngModel)]=user_name type="text"/>
+email : <input name="email" [(ngModel)]=email type="email"/>
+password : <input name="password" [(ngModel)]=password  type="password"/>
+<button>Submit</button>
+</form>
+</div>
+</div>
+@if(reg_response){
+    <div>Welcome {{reg_response}}</div>
+}
