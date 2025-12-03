@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
-import {FormBuilder, FormsModule} from '@angular/forms'
+import {FormBuilder, FormsModule, Validators} from '@angular/forms'
 import { CommonModule } from '@angular/common';
 import { RouterOutlet,RouterLinkActive,RouterLink } from '@angular/router';
 import { error } from 'console';
@@ -18,14 +18,22 @@ export class RegistorComponent {
       user_name='';
       email='';
       password='';
+      submitted=false;
+      fb=new FormBuilder();
+      form=this.fb.group({
+        user_name:['',[Validators.required,Validators.minLength(3)]],
+        email:['',[Validators.required]],
+        password:['',[Validators.required]]
+      })
       result:any=null
       error=''      
       reg_response='';
-      onsubmit(){
+      onSubmit(){
+        const formData=this.form.value;
         this.http.post<any>('http://localhost:8000/task/register',{
-          user_name:this.user_name,
-          email:this.email,
-          password:this.password
+          user_name:formData.user_name,
+          email:formData.email,
+          password:formData.password
         })
         .subscribe({
           next: (res) => {this.result=res; this.reg_response="registration succesfull"},

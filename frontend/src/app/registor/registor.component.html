@@ -1,4 +1,4 @@
- 
+ <div>
 <h3>Registration</h3>
 <!--
 <form #f="ngForm" (ngSubmit)="onsubmit()" >
@@ -13,9 +13,35 @@ password : <input name="password" [(ngModel)]=password  type="password"/>
     <div>Welcome {{reg_response}}</div>
 }
     -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >
+
+    <label>
+        UserName : <input type="text" formControlName="user_name"  placeholder="Enter Your Username" /> 
+    </label>
+    @if(form.controls.user_name.invalid && (form.controls.user_name.dirty || form.controls.user_name.touched || submitted )){
+        <p *ngIf="form.controls.user_name.errors && (form.controls.user_name.errors['required'])" >Username is required</p>
+        <p *ngIf="form.controls.user_name.errors && (form.controls.user_name.errors['minlength']) " >minimum 3 letters</p>
+
+    }
+    <label>
+        Email : <input type="email" formControlName="email" placeholder="Enter Your Email" />
+    </label>
+    @if(form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched || submitted)){
+        <p *ngIf="form.controls.email.errors && (form.controls.email.errors['required'])">Email is required</p>
+    }
+    <label>
+        Password : <input type="password" formControlName="password" placeholder="Password" /> 
+    </label>
+    @if(form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched || submitted)){
+        <p *ngIf="form.controls.password.errors && (form.controls.password.errors['required'])" >Password is required</p>
+    }
+    <button type="submit" >Register</button>
+
+</form>
 
 
 <nav>
 Login ? <a routerLink="/login" routerLinkActive="active">login</a>
 </nav> 
+</div>
 
