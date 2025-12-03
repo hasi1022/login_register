@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="login-card">
+<!-- <p>login</p>
+<form #f="ngForm" (ngSubmit)="onsubmit()" >
+    username/email <input name="username"  [(ngModel)]=username  type="text" >
+    password <input name="password"  [(ngModel)]=password  type="password" >
+    <button>Login</button>
+</form>
+@if(login){
+<p>Login succesfull</p>
+<p>{{login|json}}</p>
+} -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()"  >
+    <label>
+        username/email : <input formControlName="username" placeholder="enter your username/email" type="text" />
+    </label>
+    @if(form.controls.username.invalid &&(form.controls.username.dirty || form.controls.username.touched || submitted))
+    {
+        <p *ngIf="form.controls.username.errors && form.controls.username.errors['required'] ">Username/Email is necessary </p>
+        <p *ngIf="form.controls.username.errors && form.controls.username.errors['minlength']">minimum 3 letters required</p>
+    }
+    <label>
+        Password : <input formControlName="password"  placeholder="Enter Your Password" type="password" />
+    </label>
+    @if(form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched || submitted)){
+         <p *ngIf="form.controls.password.errors && (form.controls.password.errors['required'])" >Password is required</p>
+    }
+    <button type="submit" [disabled]="form.invalid"  >  Login</button>
+
+</form>
+<nav>
+Create new user <a routerLink="/register" routerLinkActive="active">Signup</a>
+</nav> 
+</div>
+
+

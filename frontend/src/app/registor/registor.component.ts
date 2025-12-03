@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
-import {FormsModule} from '@angular/forms'
+import {FormBuilder, FormsModule} from '@angular/forms'
 import { CommonModule } from '@angular/common';
+import { RouterOutlet,RouterLinkActive,RouterLink } from '@angular/router';
 import { error } from 'console';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-registor',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink,RouterLinkActive,ReactiveFormsModule],
   templateUrl: './registor.component.html',
   styleUrl: './registor.component.css'
 })
