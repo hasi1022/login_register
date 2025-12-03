@@ -35,13 +35,19 @@ password : <input name="password" [(ngModel)]=password  type="password"/>
     @if(form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched || submitted)){
         <p *ngIf="form.controls.password.errors && (form.controls.password.errors['required'])" >Password is required</p>
     }
-    <button type="submit" >Register</button>
+    <button type="submit" [disabled]="form.invalid">Register</button>
+
 
 </form>
 
 
+
 <nav>
 Login ? <a routerLink="/login" routerLinkActive="active">login</a>
-</nav> 
+</nav>
+@if(reg_response){ 
+<p>{{reg_response}}</p>
+}
 </div>
+
 

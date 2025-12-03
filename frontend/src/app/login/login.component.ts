@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Form } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private http:HttpClient,private router:Router){}
+  constructor(private http:HttpClient,private router:Router,private authservice:AuthService){}
         // username='';
         // password='';
         login='';
@@ -27,15 +29,19 @@ export class LoginComponent {
           password:['',[Validators.required]]
         })
         onSubmit(){
-          const formData=this.form.value;
-               this.http.post<any>('http://localhost:8000/task/login',{
-                username:formData.username,
-                password:formData.password
-               })
-               .subscribe({
-                 next: (res)=>{this.login=res; this.router.navigate(['/dashboard'])},
-                 error: (err)=>{this.error=err}
-               })
+          this.authservice.login(this.form.value).subscribe({
+            next:(res)=>{this.login=res; this.router.navigate(['/dashboard']); localStorage.setItem('token',res.token)},
+            error:(err)=>{this.error=err}
+          })
+          // const formData=this.form.value;
+          //      this.http.post<any>('http://localhost:8000/task/login',{
+          //       username:formData.username,
+          //       password:formData.password
+          //      })
+          //      .subscribe({
+          //        next: (res)=>{this.login=res; this.router.navigate(['/dashboard'])},
+          //        error: (err)=>{this.error=err}
+          //      })
         }
 
 }
