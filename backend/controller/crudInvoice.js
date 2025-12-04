@@ -86,18 +86,18 @@ catch(err){
     return res.status(500).json({message:'update unsuccessful'})
 }
 }
-// export const deleteInvoice = async (req,res) =>{
-//      try{
-//       const del_id=req.params.id;
-//       if(!del_id){
-//         return res.status(400).json({message:'id not provided please provide id'})
-//       }
-//       await items.destroy({where:{invoiceId:del_id}})
-//       await invoice.destroy({where:{invoiceId:del_id}})
-//       res.status(202).json({message:'Delete Successful'})
-//     }
-//     catch(err){
-//         console.log(err)
-//         return res.status(500).json({message:'delete unsuccessful'})
-//     }
-// }
+export const deleteInvoice = async (req,res) =>{
+     try{
+      const del_id=req.params.id;
+      if(!del_id){
+        return res.status(400).json({message:'id not provided please provide id'})
+      }
+      await items.destroy({where:{invoiceId:del_id}})
+      await invoice.destroy({where:{invoiceId:del_id}})
+      res.status(202).json({message:'Delete Successful'})
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:'delete unsuccessful'})
+    }
+}

@@ -13,6 +13,6 @@ router.post('/login',validation(loginUserValid),loginUser)
 router.post('/createinvoice',authentication,createInvoice)
 router.get('/getinvoice/:id',getInvoice)
 router.post('/update/:id',authentication,updateInvoice)
-// router.get('/delete/:id',authentication,deleteInvoice)
+router.get('/delete/:id',authentication,deleteInvoice)
 
 export default router
