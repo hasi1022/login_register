@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js"
+import invoice from "./invoice.js";
 const user=sequelize.define("user",{
       user_id:{
         type:DataTypes.INTEGER,
@@ -19,4 +20,5 @@ const user=sequelize.define("user",{
          allowNull:false,
       }
 })
+
 export default user
