@@ -55,3 +55,49 @@ catch(err){
     return res.status(500).json({message:'did not get company'})
 }
 }
+export const updateInvoice = async (req,res) =>{
+    try{
+    const update_id=req.params.id;
+    const update_result=req.body;
+    console.log(update_result)
+    const user_login=req.user.id;
+    let item =JSON.parse(update_result.items)
+    let grandtotal=0;
+    for (let i of item){
+         i.itemSubUnitTotal=(i.itemQuantity*i.itemUnitPrice)
+         i.itemGst=(0.18*i.itemSubUnitTotal)
+         grandtotal+=i.itemSubUnitTotal;
+    }
+    const invoice_latest=await invoice.update({
+        billTo:update_result.billTo,
+        invoiceDate:update_result.invoiceDate,
+        grandTotal:grandtotal,
+        invoiceDate:update_result.invoiceDate,
+        user_id:user_login
+    },{where:{invoiceId:update_id}})
+    for(let i of item){
+        i.invoiceId=update_id;
+    }
+    await items.bulkCreate(item,{updateOnDuplicate:['itemName','itemQuantity', 'itemUnitPrice', 'itemSubUnitTotal', 'itemGst']})
+    res.status(200).json({message:"created succesfully"})
+}
+catch(err){
+    console.log(err)
+    return res.status(500).json({message:'update unsuccessful'})
+}
+}
+// export const deleteInvoice = async (req,res) =>{
+//      try{
+//       const del_id=req.params.id;
+//       if(!del_id){
+//         return res.status(400).json({message:'id not provided please provide id'})
+//       }
+//       await items.destroy({where:{invoiceId:del_id}})
+//       await invoice.destroy({where:{invoiceId:del_id}})
+//       res.status(202).json({message:'Delete Successful'})
+//     }
+//     catch(err){
+//         console.log(err)
+//         return res.status(500).json({message:'delete unsuccessful'})
+//     }
+// }
