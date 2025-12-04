@@ -12,6 +12,6 @@ const router=express.Router()
 router.post('/register',validation(registerUserValid),registerUser)
 router.post('/login',validation(loginUserValid),loginUser)
 router.post('/createinvoice',authentication,createInvoice)
-// router.get('/getinvoice/:id',getInvoice)
+router.get('/getinvoice/:id',getInvoice)
 
 export default router
