@@ -4,26 +4,35 @@ import { RegistorComponent } from './registor/registor.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { AuthGuardLogin } from './auth.guard';
+import { CreateComponent } from './create/create.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch:'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   {
     path: 'login',
-    canActivate:[AuthGuardLogin],
+    canActivate: [AuthGuardLogin],
     loadComponent: () =>
-      import('./login/login.component').then(m => m.LoginComponent)
+      import('./login/login.component').then((m) => m.LoginComponent),
   },
 
   {
     path: 'register',
     loadComponent: () =>
-      import('./registor/registor.component').then(m => m.RegistorComponent)
+      import('./registor/registor.component').then((m) => m.RegistorComponent),
   },
   {
-    path:'dashboard',
-    canActivate:[AuthGuard],
-    loadComponent:()=>
-      import('./dashboard/dashboard.component').then(m=>DashboardComponent)
-  }
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
+  },
+  {
+    path: 'create',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./create/create.component').then((m) => m.CreateComponent),
+  },
 ];

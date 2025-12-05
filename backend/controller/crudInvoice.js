@@ -7,8 +7,9 @@ import {invoice,items,user} from "../models/merge.js";
 export const createInvoice = async (req,res) =>{
     console.log(req.body)
     try{
+    
     const val=req.body;
-    let item=JSON.parse(val.items);
+    let item=val.items;
     const user_login=req.user.id;
     console.log(user_login)
     let grandtotal=0;
@@ -39,8 +40,8 @@ catch(err){
 export const getInvoice = async (req,res) =>{
     try{
     const req_id=req.params.id;
-    const invoice_result=await invoice.findOne({
-        where:{invoiceId:req_id},include:[{
+    const invoice_result=await invoice.findAll({
+        where:{user_id:req_id},include:[{
             model:items,
             as:'items'
         }]

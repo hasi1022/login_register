@@ -14,4 +14,8 @@ export class DashboardComponent {
       localStorage.removeItem('token');
       this.router.navigate(['/login'])
     }
+    create(){
+      this.router.navigate(['/create'])
+    }
+    token=localStorage.getItem('token')
 }

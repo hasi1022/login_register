@@ -1,0 +1,39 @@
+<p>create works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>
+    Bill To :
+    <input type="text" formControlName="billTo" placeholder="Billing to " />
+  </label>
+  <label>
+    Invoice Date : <input type="date" formControlName="invoiceDate" />
+  </label>
+  <div formArrayName="items" >
+  @for(i of items.controls; track $index; let index = $index){
+    <div [formGroupName]="index">
+    <label>
+    Item Name :
+    <input
+      type="text"
+      formControlName="itemName"
+      placeholder="Item Name"
+    />
+  </label>
+  <label>
+    Item Quantity : <input type="number" formControlName="itemQuantity" />
+  </label>
+  <label>
+    Unit Price :
+    <input type="number" step="0.01" formControlName="itemUnitPrice" />
+  </label>
+</div>
+  }
+</div>
+  
+  <button type="button"  (click)="add()">Add</button>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+@if(result){
+<p>{{ result | json}}</p>
+} @if(err){
+<p>{{ err | json}}</p>
+}
