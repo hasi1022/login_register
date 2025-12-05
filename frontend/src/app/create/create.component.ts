@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   selector: 'app-create',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './create.component.html',
-  styleUrl: './create.component.scss',
+  styleUrl: './create.component.css',
 })
 export class CreateComponent {
   form: FormGroup;

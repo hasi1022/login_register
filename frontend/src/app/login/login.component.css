@@ -1,80 +1,114 @@
-/* Center everything */
+/* Apple System Font */
 :host {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+  background: #f5f5f7;
   display: flex;
   justify-content: center;
-  padding-top: 60px;
-  font-family: Arial, sans-serif;
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* Card container */
+/* Login container */
 .login-card {
-  width: 330px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
+  background: #ffffff;
+  padding: 40px 45px;
+  width: 380px;
+  border-radius: 26px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e5e7;
+  animation: fadeIn 0.4s ease;
 }
 
-/* Title */
-.login-card h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #1e2a3b;
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Input styling */
+/* Labels */
+label {
+  display: block;
+  font-weight: 500;
+  font-size: 15px;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+}
+
+/* Input fields */
 input {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0 18px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+  margin-top: 6px;
+  padding: 14px 16px;
+  border: 1px solid #d2d2d7;
+  border-radius: 14px;
+  background: #fdfdfd;
+  font-size: 15px;
+  transition: 0.25s ease;
 }
 
+/* Input focus effect */
 input:focus {
+  border-color: #007aff;
   outline: none;
-  border-color: #3467eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.25);
 }
 
-/* Button */
+/* Error messages */
+p {
+  color: #d70015;
+  font-size: 13px;
+  margin-top: -10px;
+  margin-bottom: 12px;
+  padding-left: 4px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Submit button */
 button {
   width: 100%;
-  padding: 10px;
-  background: #3467eb;
-  color: white;
+  padding: 14px;
+  background: #007aff;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
+  border-radius: 14px;
   font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #244fc9;
-}
-
-/* Success message */
-.success-box {
+  font-weight: 600;
   margin-top: 10px;
-  padding: 10px;
-  background: #e8f8ec;
-  color: #267a3e;
-  border-radius: 6px;
-  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
 
-/* Bottom nav */
+/* Hover effect */
+button:hover:not(:disabled) {
+  background: #0069d9;
+  transform: translateY(-1px);
+}
+
+/* Disabled button */
+button:disabled {
+  opacity: 0.50;
+  cursor: not-allowed;
+}
+
+/* Signup link */
 nav {
-  margin-top: 15px;
+  margin-top: 20px;
   text-align: center;
   font-size: 14px;
 }
 
 nav a {
-  color: #3467eb;
+  color: #007aff;
   text-decoration: none;
+  font-weight: 500;
 }
 
 nav a:hover {
