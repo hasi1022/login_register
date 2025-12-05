@@ -13,7 +13,7 @@ router.post('/register',validation(registerUserValid),registerUser)
 router.post('/login',validation(loginUserValid),loginUser)
 router.post('/createinvoice',authentication,validation(creInvoice),createInvoice)
 router.get('/getinvoice/:id',getInvoice)
-router.post('/update/:id',authentication,updateInvoice)
+router.post('/update/:id',authentication,validation(creInvoice),updateInvoice)
 router.get('/delete/:id',authentication,deleteInvoice)
 
 export default router

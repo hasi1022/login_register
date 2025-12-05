@@ -34,8 +34,8 @@ export class CreateComponent {
   createItem() {
     return this.fb.group({
       itemName: ['', Validators.required],
-      itemQuantity: [0, Validators.required],
-      itemUnitPrice: [0, Validators.required],
+      itemQuantity: ['', Validators.required],
+      itemUnitPrice: ['', Validators.required],
     });
   }
   get items(): FormArray {

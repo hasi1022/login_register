@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 
+
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
@@ -13,6 +14,8 @@ import { AuthService } from '../auth.service';
 export class DashboardComponent {
   result:any=null
   err=''
+  selectedInvoice:any=null;
+  delInvoice:any;
   constructor(private router:Router,private authservice:AuthService){
     this.authservice.dashboard().subscribe({
       next:(res)=>{this.result=res},
@@ -27,6 +30,13 @@ export class DashboardComponent {
     create(){
       this.router.navigate(['/create'])
     }
-    
-    
+    populateForm(invoice:any){
+         this.authservice.setSelectedInvoice(invoice)
+         this.router.navigate(['/update'])
+    }
+    deleteBtn(invoice:any){
+        
+
+
+    }
 }

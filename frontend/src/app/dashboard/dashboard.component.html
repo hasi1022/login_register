@@ -16,6 +16,8 @@
     <p><strong>Bill To:</strong> {{ invoice.billTo }}</p>
     <p><strong>Invoice Date:</strong> {{ invoice.invoiceDate | date }}</p>
     <p><strong>Grand Total:</strong> ₹{{ invoice.grandTotal }}</p>
+    <button type="button" (click)="populateForm(invoice)" >Update</button>
+    <button type="button" (click)="deleteBtn(invoice)" >Delete</button>
 
     <h4>Items:</h4>
     <table border="1" cellpadding="5" style="border-collapse: collapse;">

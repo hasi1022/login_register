@@ -62,7 +62,7 @@ export const updateInvoice = async (req,res) =>{
     const update_result=req.body;
     console.log(update_result)
     const user_login=req.user.id;
-    let item =JSON.parse(update_result.items)
+    let item =update_result.items
     let grandtotal=0;
     for (let i of item){
          i.itemSubUnitTotal=(i.itemQuantity*i.itemUnitPrice)

@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { AuthGuardLogin } from './auth.guard';
 import { CreateComponent } from './create/create.component';
+import { UpdateComponent } from './update/update.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,4 +36,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./create/create.component').then((m) => m.CreateComponent),
   },
+  {
+    path:'update',
+    canActivate:[AuthGuard],
+    loadComponent:() => 
+      import('./update/update.component').then((m)=>m.UpdateComponent)    
+  }
 ];
