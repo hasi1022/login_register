@@ -37,9 +37,10 @@ export const routes: Routes = [
       import('./create/create.component').then((m) => m.CreateComponent),
   },
   {
-    path:'update',
+    path: 'create/:id',
     canActivate:[AuthGuard],
-    loadComponent:() => 
-      import('./update/update.component').then((m)=>m.UpdateComponent)    
+    loadComponent:()=>
+      import('./create/create.component').then((m)=>m.CreateComponent),
   }
+ 
 ];

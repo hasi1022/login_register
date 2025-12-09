@@ -28,6 +28,7 @@
           <th>Unit Price</th>
           <th>Subtotal</th>
           <th>GST</th>
+          <th>GST amount</th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +37,7 @@
           <td>{{ item.itemQuantity }}</td>
           <td>₹{{ item.itemUnitPrice }}</td>
           <td>₹{{ item.itemSubUnitTotal }}</td>
+          <td>{{item.itemGstPer}}%</td>
           <td>₹{{ item.itemGst }}</td>
         </tr>
       </tbody>
@@ -49,3 +51,9 @@
 <ng-template #noData>
   <p>No invoices found.</p>
 </ng-template>
+@if(err){
+    <p>{{err | json}}</p>
+}
+@if(rePage){
+  <p>{{rePage | json}}</p>
+}

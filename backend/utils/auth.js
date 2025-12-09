@@ -2,8 +2,12 @@ import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken"
 export async function authentication(req,res,next){
+    console.log("------------------------------------")
+    console.log("------------------------------------")
+    console.log(req.headers.authorization)
    try{
     const sub_token=req.headers.authorization;
+    console.log(sub_token)
     const token=sub_token.slice(7,)
     const result=jwt.verify(token,process.env.JWT_SECRET)
     if(!result){
@@ -14,6 +18,7 @@ export async function authentication(req,res,next){
     next();
    }
    catch(err){
+    console.log(err)
     return res.status(500).json({message:'authentication Error'})
    }
 }

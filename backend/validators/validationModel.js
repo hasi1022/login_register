@@ -10,12 +10,18 @@ export const loginUserValid=joi.object({
     password:joi.string().required()
 })
 const itemInvoice=joi.object({
+    
     itemName:joi.string().required(),
     itemQuantity:joi.number().required(),
     itemUnitPrice:joi.number().required(),
+    itemGstPer:joi.number().required(),
+    itemGst:joi.number().required(),
+    itemSubUnitTotal:joi.number().required(),
 })
 export const creInvoice=joi.object({
         billTo:joi.string().required(),
         invoiceDate:joi.string().isoDate().required(),
-        items:joi.array().items(itemInvoice).required()
+        grandTotal:joi.number().required(),
+        items:joi.array().items(itemInvoice).required(),
+
 })

@@ -25,6 +25,10 @@ const items=sequelize.define('items',{
         type:DataTypes.DECIMAL,
         allowNull:false
     },
+    itemGstPer:{
+        type:DataTypes.DECIMAL,
+        allowNull:false
+    },
     itemGst:{
         type:DataTypes.DECIMAL,
         allowNull:false

@@ -1,6 +1,7 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router,CanDeactivate, mapToCanDeactivate } from '@angular/router';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root',
@@ -34,3 +35,5 @@ export class AuthGuardLogin {
     return true;
   }
 }
+
+

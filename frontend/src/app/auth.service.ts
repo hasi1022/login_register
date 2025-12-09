@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../enviroment/enviroment";
 import { jwtDecode } from "jwt-decode";
+import { Invoice } from "./model/invoice.model";
+import { map } from "rxjs";
 
 
 @Injectable({
@@ -21,26 +23,36 @@ export class AuthService{
     }
     dashboard():Observable<any>{
         const userId=this.getUserId();
-        return this.http.get(`${this.baseUrl}/getinvoice/${userId}`)
+        const headers=this.getToken();
+        return this.http.get(`${this.baseUrl}/getinvoice/${userId}`,{headers})
 
     }
     create(data:any):Observable<any>{
-        const token=localStorage.getItem('token')
-        const headers=new HttpHeaders({
-            'Authorization':`Bearer ${token}`
-        })
+        
+        const headers=this.getToken()
         return this.http.post(`${this.baseUrl}/createinvoice`,data,{headers})
     }
+    updateList(id: string): Observable<Invoice> {
+  const headers = this.getToken();
+  return this.http.get<{message:Invoice}>(`${this.baseUrl}/updates/${id}`, { headers }).pipe(
+    map(res => res.message)
+  )
+}
+
+    // updateList(id:string):Observable<Invoice>{
+    //     const headers=this.getToken();
+    //     return this.http.get(`${this.baseUrl}/updates/${id}`,{headers})
+    // }
     update(data:any,id:any):Observable<any>{
-        const token=localStorage.getItem('token')
-        const headers=new HttpHeaders({
-            'Authorization':`Bearer ${token}`
-        })
+        
+        const headers=this.getToken()
          return this.http.post(`${this.baseUrl}/update/${id}`,data,{headers}) 
     }
     delete(invoice:any):Observable<any>{
        const id=invoice.invoiceId;
-       return this.http.get(`${this.baseUrl}/`)
+        
+        const headers=this.getToken()
+       return this.http.get(`${this.baseUrl}/delete/${id}`,{headers})
     }
     getUserId(){
          const token=localStorage.getItem('token');
@@ -55,5 +67,15 @@ export class AuthService{
     }
     getSelectedInvoice(){
         return this.selectedInvoice
+    }
+    clearSelectedInvoice(){
+        return this.selectedInvoice=null
+    }
+    getToken(){
+           const token=localStorage.getItem('token')
+           const headers = new HttpHeaders({
+            'Authorization':`Bearer ${token}`
+           })
+           return headers
     }
 }

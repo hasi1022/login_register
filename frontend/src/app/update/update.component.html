@@ -4,9 +4,19 @@
     Bill To :
     <input type="text" formControlName="billTo" placeholder="Billing to " />
   </label>
+  @if(form.get('billTo')?.invalid &&(form.get('billTo')?.dirty || form.get('billTo')?.touched)){
+    @if(form.get('billTo')?.errors && form.get('billTo')?.errors?.['required']){
+      <small>billTo is required</small>
+    }
+  }
   <label>
     Invoice Date : <input type="date" formControlName="invoiceDate" />
   </label>
+  @if(form.get('invoiceDate')?.invalid && (form.get('invoiceDate')?.dirty || form.get('invoiceDate')?.touched)){
+    @if(form.get('invoiceDate')?.errors && form.get('invoiceDate')?.errors?.['required']){
+      <small>Date is required</small>
+    }
+  }
   <div formArrayName="items" >
   @for(i of items.controls; track $index; let index = $index){
     <div [formGroupName]="index">

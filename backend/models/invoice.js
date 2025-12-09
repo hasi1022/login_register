@@ -19,7 +19,7 @@ const invoice=sequelize.define("invoice",{
          allowNull:false
     },
     grandTotal:{
-        type:DataTypes.BIGINT,
+        type:DataTypes.DECIMAL,
     }
 }
 )

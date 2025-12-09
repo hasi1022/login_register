@@ -16,6 +16,10 @@ export class DashboardComponent {
   err=''
   selectedInvoice:any=null;
   delInvoice:any;
+  del='';
+  rePage='';
+  id:number|null=null;
+  
   constructor(private router:Router,private authservice:AuthService){
     this.authservice.dashboard().subscribe({
       next:(res)=>{this.result=res},
@@ -32,10 +36,19 @@ export class DashboardComponent {
     }
     populateForm(invoice:any){
          this.authservice.setSelectedInvoice(invoice)
-         this.router.navigate(['/update'])
+         this.id=this.authservice.getSelectedInvoice().invoiceId
+         this.router.navigate([`/create/${this.id}`])
     }
     deleteBtn(invoice:any){
-        
+        this.authservice.delete(invoice).subscribe({
+          next:(res)=>{this.del="delete succesfull";
+            this.authservice.dashboard().subscribe({    
+              next: (res) =>  this.result=res
+                    })
+          },
+          error:(err)=>{this.err=err}
+        })
+
 
 
     }

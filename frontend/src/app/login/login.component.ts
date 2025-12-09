@@ -30,7 +30,7 @@ export class LoginComponent {
         })
         onSubmit(){
           this.authservice.login(this.form.value).subscribe({
-            next:(res)=>{this.login=res; this.router.navigate(['/dashboard']); localStorage.setItem('token',res.token)},
+            next:(res)=>{this.login=res;  localStorage.setItem('token',res.token); this.router.navigate(['/dashboard']);},
             error:(err)=>{this.error=err}
           })
           // const formData=this.form.value;

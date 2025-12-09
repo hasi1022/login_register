@@ -28,6 +28,7 @@ password : <input name="password" [(ngModel)]=password  type="password"/>
     </label>
     @if(form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched || submitted)){
         <p *ngIf="form.controls.email.errors && (form.controls.email.errors['required'])">Email is required</p>
+        <p *ngIf="form.controls.email.errors && (form.controls.email.errors['email'])" >
     }
     <label>
         Password : <input type="password" formControlName="password" placeholder="Password" /> 
