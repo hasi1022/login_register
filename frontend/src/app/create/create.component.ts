@@ -100,9 +100,9 @@ export class CreateComponent implements OnDestroy{
     return this.form.get('items') as FormArray<FormGroup>;
   }
   
-  // add() {
-  //   this.items.push(this.createItem());
-  // }
+  add() {
+    this.items.push(this.createItem());
+  }
   remove(){
     this.items.removeAt(this.items.length-1)
   }
