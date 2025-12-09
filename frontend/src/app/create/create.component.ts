@@ -103,9 +103,9 @@ export class CreateComponent implements OnDestroy{
   // add() {
   //   this.items.push(this.createItem());
   // }
-  // remove(){
-  //   this.items.removeAt(this.items.length-1)
-  // }
+  remove(){
+    this.items.removeAt(this.items.length-1)
+  }
   onClick() {
     if (this.routerId) {
       this.onUpdate();
