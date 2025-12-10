@@ -4,68 +4,77 @@
     Bill To :
     <input type="text" formControlName="billTo" placeholder="Billing to " />
   </label>
-  @if(form.get('billTo')?.invalid && (form.get('billTo')?.dirty || form.get('billTo')?.touched)){
-    @if(form.get('billTo')?.errors?.['required']){
-      <small>billTo is required</small>
-    }
-  }
+  @if(form.get('billTo')?.invalid && (form.get('billTo')?.dirty ||
+  form.get('billTo')?.touched)){ @if(form.get('billTo')?.errors?.['required']){
+  <small>billTo is required</small>
+  } }
   <label>
     Invoice Date : <input type="date" formControlName="invoiceDate" />
   </label>
-  @if(form.get('invoiceDate')?.invalid && (form.get('invoiceDate')?.dirty || form.get('invoiceDate')?.touched)){
-    @if(form.get('invoiceDate')?.errors?.['required']){
-      <small>billTo is required</small>
-    }
-  }
-  <div formArrayName="items" >
-  @for(i of items.controls; track $index; let index = $index){
-    <div [formGroupName]="index">
-    <label>
-    Item Name :
-    <input
-      type="text"
-      formControlName="itemName"
-      placeholder="Item Name"
-    />
-  </label>
-  
-  <label>
-    Item Quantity : <input type="number" formControlName="itemQuantity" />
-  </label>
-  <label>
-    Unit Price :
-    <input type="number" step="0.01" formControlName="itemUnitPrice" />
-  </label>
-  <label>
-    Gst Percentage :
-    <input type="number" step="0.01" formControlName="itemGstPer" />
-  </label>
-  <label>
-    Gst Amount : <input type="number" step="0.01"   formControlName="itemGst" readonly />
-  </label>
-  <label>
-    Sub item Total : <input type="number" step="0.01"   formControlName="itemSubUnitTotal" (keydown)="$event.preventDefault()" readonly class="readonly-field" />
-  </label>
-</div>
-  }
-</div>
-<label>
-  GrandTotal : 
-  <input type="number"   formControlName="grandTotal" readonly/>
-</label>
-  
-  <button type="button"  (click)="add()">Add</button>
-  @if(mode==="create"){
-    <button type="submit"  [disabled]="form.invalid"  >Submit</button>
-  }
-  @else(){
-    <button type="submit" [disabled]="form.invalid"  >Update</button>
-  }
-  <button type="button" (click)="remove()" >Remove</button>
-</form>
-@if(result){
-<p>{{ result | json}}</p>
-} @if(err){
-<p>{{ err | json}}</p>
-}
+  @if(form.get('invoiceDate')?.invalid && (form.get('invoiceDate')?.dirty ||
+  form.get('invoiceDate')?.touched)){
+  @if(form.get('invoiceDate')?.errors?.['required']){
+  <small>billTo is required</small>
+  } }
+  <div formArrayName="items">
+    @for(ctrl of items.controls; track ctrl.value.uuid; let i = $index){
+    <div [formGroupName]="i">
+      <label>
+        Item Name :
+        <input type="text" formControlName="itemName" placeholder="Item Name" />
+      </label>
 
+      <label>
+        Item Quantity : <input type="number" formControlName="itemQuantity" />
+      </label>
+      <label>
+        Unit Price :
+        <input type="number" step="0.01" formControlName="itemUnitPrice" />
+      </label>
+      <label>
+        Gst Percentage :
+        <input type="number" step="0.01" formControlName="itemGstPer" />
+      </label>
+      <label>
+        Gst Amount :
+        <input type="number" step="0.01" formControlName="itemGst" readonly />
+      </label>
+      <label>
+        Sub item Total :
+        <input
+          type="number"
+          step="0.01"
+          formControlName="itemSubUnitTotal"
+          (keydown)="$event.preventDefault()"
+          readonly
+          class="readonly-field"
+        />
+      </label>
+      
+      <button type="button" (click)="removeItem(i)">Remove</button>
+    </div>
+    }
+  </div>
+  <label>
+    GrandTotal :
+    <input type="number" formControlName="grandTotal" readonly />
+  </label>
+
+  <button type="button" (click)="add()">Add</button>
+  @if(mode==="create"){
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+  } @else(){
+  <button type="submit" [disabled]="form.invalid">Update</button>
+  }
+ 
+</form>
+@if(result)
+{
+<p>{{ result | json }}</p>
+} @if(err)
+{
+<p>{{ err | json }}</p>
+} @if(itemRequired)
+{
+<p>{{ itemRequired }}</p>
+}

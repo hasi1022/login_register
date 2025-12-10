@@ -22,9 +22,9 @@ export class AuthService{
         return this.http.post(`${this.baseUrl}/login`,data)
     }
     dashboard():Observable<any>{
-        const userId=this.getUserId();
+        
         const headers=this.getToken();
-        return this.http.get(`${this.baseUrl}/getinvoice/${userId}`,{headers})
+        return this.http.get(`${this.baseUrl}/getinvoice`,{headers})
 
     }
     create(data:any):Observable<any>{
