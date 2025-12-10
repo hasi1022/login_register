@@ -2,8 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import jwt from "jsonwebtoken"
 export async function authentication(req,res,next){
-    console.log("------------------------------------")
-    console.log("------------------------------------")
+
     console.log(req.headers.authorization)
    try{
     const sub_token=req.headers.authorization;
