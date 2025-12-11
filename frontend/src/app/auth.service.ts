@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../enviroment/enviroment";
 import { jwtDecode } from "jwt-decode";
-import { Invoice } from "./model/invoice.model";
+import { Invoice, User } from "./model/invoice.model";
 import { map } from "rxjs";
 
 
@@ -57,6 +57,10 @@ export class AuthService{
     admin():Observable<any>{
         const headers=this.getToken()
         return this.http.get(`${this.baseUrl}/admin`,{headers})
+    }
+    userDelete(user:User):Observable<any>{
+        const headers=this.getToken();
+        return this.http.post(`${this.baseUrl}/userdelete`,user,{headers})
     }
     
     getUserId(){

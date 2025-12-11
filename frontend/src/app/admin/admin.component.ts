@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class AdminComponent {
       users:User[]|null=null;
       error='';
+      delResult:string='';
       constructor(private authservice:AuthService,private router:Router){
         this.authservice.admin().subscribe({
           next:(res)=>{this.users=res.users},
@@ -24,6 +25,14 @@ export class AdminComponent {
         this.router.navigate(['/dashboard'])
       }
       deleteUser(user:User){
-             
+        this.authservice.userDelete(user).subscribe({
+          next:(res)=>{this.delResult="delete succesfull";
+                this.authservice.admin().subscribe({
+                  next:(res)=>{this.users=res.users},
+                  error:(err)=>{this.error=err}
+                })
+          },
+          error:(err)=>{this.error=err}
+        })
       }
 }

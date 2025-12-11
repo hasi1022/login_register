@@ -7,7 +7,7 @@ import { validation } from "../validators/validation.js"
 import { authentication,authenticationAdmin } from "../utils/auth.js"
 import { creInvoice } from "../validators/validationModel.js"
 import { updateInvoice,deleteInvoice,getInvoice,createInvoice,getInvoiceUpdate } from "../controller/crudInvoice.js"
-import { userList } from "../controller/admin.js"
+import { userList,userDelete } from "../controller/admin.js"
 
 const router=express.Router()
 
@@ -19,5 +19,6 @@ router.post('/update/:id',authentication,validation(creInvoice),updateInvoice)
 router.get('/delete/:id',authentication,deleteInvoice)
 router.get('/updates/:id',authentication,getInvoiceUpdate)
 router.get('/admin',authenticationAdmin,userList)
+router.post('/userdelete',authenticationAdmin,userDelete)
 
 export default router
