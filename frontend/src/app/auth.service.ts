@@ -11,7 +11,6 @@ import { map } from "rxjs";
     providedIn:'root'
 })
 export class AuthService{
-
     private baseUrl = environment.baseUrl;
     private selectedInvoice:any=null;
     constructor(private http:HttpClient){}
@@ -21,10 +20,10 @@ export class AuthService{
     login(data:any):Observable<any>{
         return this.http.post(`${this.baseUrl}/login`,data)
     }
-    dashboard():Observable<any>{
+    dashboard(page:any):Observable<any>{
         
         const headers=this.getToken();
-        return this.http.get(`${this.baseUrl}/getinvoice`,{headers})
+        return this.http.get(`${this.baseUrl}/getinvoice?page=${page}`,{headers})
 
     }
     create(data:any):Observable<any>{

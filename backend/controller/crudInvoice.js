@@ -37,19 +37,21 @@ export const createInvoice = async (req, res) => {
 export const getInvoice = async (req, res) => {
   try {
     const req_id = req.user.id;
-    const invoice_result = await invoice.findAll({
-      where: { user_id: req_id },
-      include: [
+    let page=parseInt(req.query.page)||1;
+    let limit=2;
+    let offset=(page-1)*limit;
+    const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
+      include:[
         {
-          model: items,
-          as: "items",
-        },
+          model:items,
+          as:'items'
+        }
       ],
-    });
-    if (!invoice_result) {
-      return res.status(400).JSON({ message: "no Invoice with this id found" });
-    }
-    res.status(200).json({ message: invoice_result });
+      limit:limit,
+      offset:offset,
+      order:[["invoiceId","DESC"]]
+    })
+    res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "did not get company" });

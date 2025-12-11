@@ -3,7 +3,7 @@ export interface Invoice{
     billTo:string;
     invoiceDate:string;
     grandTotal:number;
-    items:any[];
+    items:Items[];
 }
 export interface Items{
     itemId:number;
@@ -21,4 +21,11 @@ export interface User{
     password:string;
     role:string;
     createdAt:string;
+}
+export interface itemPage{
+    total:number;
+    page:number;
+    perPage:number;
+    totalPage:number;
+    invoices:Invoice[];
 }
