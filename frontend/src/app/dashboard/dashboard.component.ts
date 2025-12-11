@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Invoice } from '../model/invoice.model';
-
-
-
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
@@ -13,40 +10,37 @@ import { Invoice } from '../model/invoice.model';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  result=signal<any[]>([])
-  page=signal(1);
-  perPage=signal(2);
-  totalPage=signal(1);
-  loading=signal(false)
+  result:any;
+  perPage=2;
+  totalPage=1;
+  currentPage=1
   err=''
   selectedInvoice:any=null;
   delInvoice:any;
   del='';
   rePage='';
   id:number|null=null;
-  currentPage=1
+  
   
   constructor(private router:Router,private authservice:AuthService){
-   this.loadInvoices()
+   this.loadInvoices(this.currentPage)
   }
-    // loadInvoices(){
-    //   this.authservice.dashboard(this.page).subscribe({
-    //      next:(res)=>{this.result.set(res.invoices); this.totalPage.set(res.totalPage); this.loading.set(false)},
-    //      error:(err)=>{this.err=err}
-    //   })
-    // }
-    // nextPage(){
-    //   if(this.page() < this.totalPage()){
-    //     this.page.update(v=> v+1)
-    //     this.loadInvoices();
-    //   }
-    // }
-    // prevPage(){
-    //   if(this.currentPage >1){
-    //     this.page.update(v=> v-1)
-    //     this.loadInvoices()
-    //   }
-    // }
+    loadInvoices(page:number){
+      this.authservice.dashboard(page).subscribe({
+         next:(res)=>{this.result=res; this.currentPage=res.page;this.totalPage=res.totalPage},
+         error:(err)=>{this.err=err}
+      })
+    }
+    nextPage(){
+      if(this.currentPage < this.totalPage){
+        this.loadInvoices(this.currentPage+1);
+      }
+    }
+    prevPage(){
+      if(this.currentPage >1){
+        this.loadInvoices(this.currentPage-1)
+      }
+    }
   
     onLogout(){
       localStorage.removeItem('token');

@@ -101,3 +101,45 @@ p {
   font-size: 15px;
   margin-top: 20px;
 }
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 30px 0;
+}
+
+.pg-btn {
+  padding: 8px 16px;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.pg-btn:hover {
+  background: #357ac9;
+  transform: translateY(-2px);
+}
+
+.pg-btn:disabled {
+  background: #c5c5c5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pg-info {
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+  background: #f2f2f2;
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  user-select: none;
+}
+

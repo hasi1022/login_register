@@ -1,50 +1,90 @@
-@if (result?.invoices?.length > 0) {
+<div class="dashboard-container">
 
-  <h2>All Invoices</h2>
+  <div class="top-buttons">
+    <button (click)="onLogout()">Logout</button>
+    <button (click)="create()">Create Invoice</button>
+  </div>
 
-  @for (invoice of result.invoices; track invoice.invoiceId) {
-    <div class="invoice-card">
+  <!-- Check invoices exist -->
+  @if (result.invoices.length > 0) {
 
-      <h3>Invoice #{{ invoice.invoiceId }}</h3>
+    <h2>All Invoices</h2>
 
-      <p><strong>Bill To:</strong> {{ invoice.billTo }}</p>
-      <p><strong>Invoice Date:</strong> {{ invoice.invoiceDate | date }}</p>
-      <p><strong>Grand Total:</strong> ₹{{ invoice.grandTotal }}</p>
+    @for (invoice of result.invoices; track invoice.invoiceId) {
 
-      <button type="button" (click)="populateForm(invoice)">Update</button>
-      <button type="button" (click)="deleteBtn(invoice)">Delete</button>
+      <div class="invoice-card">
 
-      <h4>Items:</h4>
-      <table border="1" cellpadding="5" style="border-collapse: collapse;">
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Subtotal</th>
-            <th>GST</th>
-            <th>GST Amount</th>
-          </tr>
-        </thead>
+        <h3>Invoice #{{ invoice.invoiceId }}</h3>
 
-        <tbody>
-          @for (item of invoice.items; track item.itemId) {
+        <p><strong>Bill To:</strong> {{ invoice.billTo }}</p>
+        <p><strong>Invoice Date:</strong> {{ invoice.invoiceDate | date }}</p>
+        <p><strong>Grand Total:</strong> ₹{{ invoice.grandTotal }}</p>
+
+        <button type="button" (click)="populateForm(invoice)">Update</button>
+        <button type="button" (click)="deleteBtn(invoice)">Delete</button>
+
+        <h4>Items:</h4>
+        <table border="1" cellpadding="5" style="border-collapse: collapse;">
+          <thead>
             <tr>
-              <td>{{ item.itemName }}</td>
-              <td>{{ item.itemQuantity }}</td>
-              <td>₹{{ item.itemUnitPrice }}</td>
-              <td>₹{{ item.itemSubUnitTotal }}</td>
-              <td>{{ item.itemGstPer }}%</td>
-              <td>₹{{ item.itemGst }}</td>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Subtotal</th>
+              <th>GST</th>
+              <th>GST Amount</th>
             </tr>
-          }
-        </tbody>
-      </table>
+          </thead>
 
-      <hr>
-    </div>
+          <tbody>
+            @for (item of invoice.items; track item.itemId) {
+              <tr>
+                <td>{{ item.itemName }}</td>
+                <td>{{ item.itemQuantity }}</td>
+                <td>₹{{ item.itemUnitPrice }}</td>
+                <td>₹{{ item.itemSubUnitTotal }}</td>
+                <td>{{ item.itemGstPer }}%</td>
+                <td>₹{{ item.itemGst }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <hr>
+      </div>
+
+    }
+
+    
+    <!-- Pagination -->
+<div class="pagination-container">
+  <button 
+    class="pg-btn" 
+    (click)="prevPage()" 
+    [disabled]="currentPage === 1">
+      ‹ Prev
+  </button>
+
+  <div class="pg-info">
+    Page <span>{{ currentPage }}</span> of <span>{{ totalPage }}</span>
+  </div>
+
+  <button 
+    class="pg-btn" 
+    (click)="nextPage()" 
+    [disabled]="currentPage === totalPage">
+      Next ›
+  </button>
+</div>
+
+
+  } @else {
+    <p>No invoices found.</p>
   }
 
-} @else {
-  <p>No invoices found.</p>
-}
+  <!-- Debug / error section -->
+  @if (err) {
+    <p>{{ err }}</p>
+  }
+
+</div>

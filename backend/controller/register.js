@@ -13,7 +13,8 @@ export const registerUser = async (req,res) =>{
     }
     req_user.password=await bcrypt.hash(req_user.password,10)
     await user.create({
-        ...req_user
+        ...req_user,
+        role:"user"
     })
     res.status(201).json({message:'user registered'})
 }

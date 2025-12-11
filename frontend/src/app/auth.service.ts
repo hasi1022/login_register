@@ -24,7 +24,6 @@ export class AuthService{
         
         const headers=this.getToken();
         return this.http.get(`${this.baseUrl}/getinvoice?page=${page}`,{headers})
-
     }
     create(data:any):Observable<any>{
         
