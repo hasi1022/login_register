@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { Form } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -24,13 +25,22 @@ export class LoginComponent {
         error='';
         fb=new FormBuilder();
         submitted=false;
+        user:any;
         form = this.fb.group({
           username:['',[Validators.required,Validators.minLength(3)]],
           password:['',[Validators.required]]
         })
         onSubmit(){
           this.authservice.login(this.form.value).subscribe({
-            next:(res)=>{this.login=res;  localStorage.setItem('token',res.token); this.router.navigate(['/dashboard']);},
+            next:(res)=>{this.login=res;  localStorage.setItem('token',res.token); 
+              this.user=jwtDecode(localStorage.getItem('token')!)
+              if(this.user?.role==="admin"){
+                this.router.navigate(['/admin'])
+              }
+              else{
+                this.router.navigate(['/dashboard']);
+              }
+              },
             error:(err)=>{this.error=err}
           })
           // const formData=this.form.value;

@@ -54,6 +54,11 @@ export class AuthService{
         const headers=this.getToken()
        return this.http.get(`${this.baseUrl}/delete/${id}`,{headers})
     }
+    admin():Observable<any>{
+        const headers=this.getToken()
+        return this.http.get(`${this.baseUrl}/admin`,{headers})
+    }
+    
     getUserId(){
          const token=localStorage.getItem('token');
          if(!token){

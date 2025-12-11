@@ -1,0 +1,37 @@
+<div class="card" *ngIf="users && users.length > 0; else noUsers">
+  <h2>User List</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created At</th>
+          <th>    </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (u of users; track u.user_id) {
+          <tr>
+            <td>{{ u.user_id }}</td>
+            <td>{{ u.user_name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.createdAt | date:'short' }}</td>
+            <td class="btnCell">
+            <button class="removeBtn" (click)="deleteUser(u)">remove</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #noUsers>
+  <p>No users available.</p>
+</ng-template>
