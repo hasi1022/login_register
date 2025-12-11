@@ -2,7 +2,9 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { Invoice } from '../model/invoice.model';
+import { Invoice, Items } from '../model/invoice.model';
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
@@ -41,7 +43,43 @@ export class DashboardComponent {
         this.loadInvoices(this.currentPage-1)
       }
     }
+    downloadPdf(invoice:Invoice){
+      const doc=new jsPDF('p','mm','a4');
+
+      doc.setFontSize(22);
+      doc.text(`Invoice ${invoice.invoiceId}`,14,15)
+      
+      doc.setFontSize(14);
+      doc.text(`Bill to : ${invoice.billTo}`,14,25)
+      doc.text(`Invoice Date : ${new Date(invoice.invoiceDate).toLocaleDateString()}`,14,32)
+      doc.text(`Grand Total : ₹${invoice.grandTotal}`,14,39)
+
+      const itemRows=invoice.items.map((item:Items)=>[
+        
+        item.itemName,
+        item.itemQuantity,
+        item.itemUnitPrice,
+        item.itemGstPer+'%',
+        item.itemGst,
+        item.itemSubUnitTotal+'₹'
+      ])
+      autoTable(doc,{
+        startY:50,
+        head:[['Item','Qty','UnitPrice','Gst%','GstAmount','Total']],
+        body:itemRows
+      })
+      doc.setFontSize(10);
+  doc.text(
+    `Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`,
+    14,
+    doc.internal.pageSize.height - 10
+  );
+doc.save(`Invoice_${invoice.invoiceId}.pdf`);
+}
   
+
+
+
     onLogout(){
       localStorage.removeItem('token');
       this.router.navigate(['/login'])
