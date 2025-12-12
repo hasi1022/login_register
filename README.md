@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="https://via.placeholder.com/1200x400/3f51b5/ffffff?text=Invoice+Management+System+Banner" alt="Invoice Management System Banner" width="100%" />
+  <img width="3168" height="1344" alt="" src="https://github.com/user-attachments/assets/60b64608-01d7-4ef9-81b4-5885a43aac82" />
+f?text=Invoice+Management+System+Banner" alt="Invoice Management System Banner" width="100%" />
 </p>
+
 
 <h1 align="center">📌 Invoice Management System (PERN Stack)</h1>
 
