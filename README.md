@@ -1,6 +1,7 @@
 <p align="center">
-  <img width="3168" height="1344" alt="" src="https://github.com/user-attachments/assets/60b64608-01d7-4ef9-81b4-5885a43aac82" />
-f?text=Invoice+Management+System+Banner" alt="Invoice Management System Banner" width="100%" />
+  
+<img width="3168" height="1344" alt="Gemini_Generated_Image_5ljhxg5ljhxg5ljh (1)" src="https://github.com/user-attachments/assets/b1a961c3-6bcd-48e8-bf3d-4a836e27e052" />
+
 </p>
 
 
