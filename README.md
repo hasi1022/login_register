@@ -60,7 +60,7 @@ A production-ready **Invoice Management System** built with:
 cd backend
 npm install
 npm start
-#### Backend
+Frontend
 cd frontend
 npm install
 ng serve -o
