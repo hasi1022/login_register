@@ -38,8 +38,39 @@ export const getInvoice = async (req, res) => {
   try {
     const req_id = req.user.id;
     let page=parseInt(req.query.page)||1;
+    let sort=req.query.sort;
     let limit=2;
     let offset=(page-1)*limit;
+    if(sort==="DESC"){
+      const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
+      include:[
+        {
+          model:items,
+          as:'items'
+        }
+      ],
+      limit:limit,
+      offset:offset,
+      order:[["grandTotal","ASC"]]
+    })
+     res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+    }
+    else if(sort==="AESC"){
+      const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
+      include:[
+        {
+          model:items,
+          as:'items'
+        }
+      ],
+      limit:limit,
+      offset:offset,
+      order:[["grandTotal","DESC"]]
+    })
+     res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+
+    }
+    else{
     const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
       include:[
         {
@@ -51,7 +82,9 @@ export const getInvoice = async (req, res) => {
       offset:offset,
       order:[["invoiceId","DESC"]]
     })
-    res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+     res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+  }
+   
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "did not get company" });

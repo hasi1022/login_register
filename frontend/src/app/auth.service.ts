@@ -20,10 +20,16 @@ export class AuthService{
     login(data:any):Observable<any>{
         return this.http.post(`${this.baseUrl}/login`,data)
     }
-    dashboard(page:any):Observable<any>{
+    dashboard(page:any,sort:string|null):Observable<any>{
         
         const headers=this.getToken();
-        return this.http.get(`${this.baseUrl}/getinvoice?page=${page}`,{headers})
+        if(sort){
+            return this.http.get(`${this.baseUrl}/getinvoice?page=${page}&sort=${sort}`,{headers})
+        }
+        else{
+             return this.http.get(`${this.baseUrl}/getinvoice?page=${page}`,{headers})
+        }
+        
     }
     create(data:any):Observable<any>{
         
