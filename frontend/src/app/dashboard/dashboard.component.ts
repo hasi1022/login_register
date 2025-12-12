@@ -119,16 +119,16 @@ doc.save(`Invoice_${invoice.invoiceId}.pdf`);
       }
       )
     }
-    // search(event:any){
-    //     const text=event.target.value.toLowerCase();
-    //     if(!text){
-    //       this.loadInvoices(this.currentPage)
-    //     }
-    //     else{
-    //       this.result.invoices=this.copyInvoices.filter((inv:any)=>
-    //       inv.billTo.toLowerCase().startsWith(text)
-    //     )
-    //     }
+    search(event:any){
+        const text=event.target.value.toLowerCase();
+        if(!text){
+          this.loadInvoices(this.currentPage)
+        }
+        else{
+          this.result.invoices=this.copyInvoices.filter((inv:any)=>
+          inv.billTo.toLowerCase().startsWith(text)
+        )
+        }
                 
-    // }
+    }
 }
