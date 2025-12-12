@@ -39,39 +39,29 @@ export const getInvoice = async (req, res) => {
     const req_id = req.user.id;
     let page=parseInt(req.query.page)||1;
     let sort=req.query.sort;
+    let search=req.query.search;
+    console.log("Search : "+search)
     let limit=2;
     let offset=(page-1)*limit;
+    let order=[["invoiceId","DESC"]];
     if(sort==="DESC"){
-      const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
-      include:[
-        {
-          model:items,
-          as:'items'
-        }
-      ],
-      limit:limit,
-      offset:offset,
-      order:[["grandTotal","ASC"]]
-    })
-     res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+      order=[["grandTotal","ASC"]];
     }
-    else if(sort==="AESC"){
-      const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
-      include:[
-        {
-          model:items,
-          as:'items'
-        }
-      ],
-      limit:limit,
-      offset:offset,
-      order:[["grandTotal","DESC"]]
-    })
-     res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
+    if(sort==="ASEC"){
+      order=[["grandTotal","DESC"]]
+    }
+    const whereCondition={user_id:req_id}
+    if(search){
+      whereCondition.billTo={[Op.like]:`${search}%`}
+      console.log(whereCondition)
+    }
 
-    }
-    else{
-    const {count,rows}=await invoice.findAndCountAll({where:{user_id:req_id},  // counts and rows are compulsory for destruction
+    
+    
+    const {count,rows}=await invoice.findAndCountAll({
+      distinct:true,
+      col:'invoiceId',
+      where:whereCondition,  // counts and rows are compulsory for destruction
       include:[
         {
           model:items,
@@ -80,10 +70,12 @@ export const getInvoice = async (req, res) => {
       ],
       limit:limit,
       offset:offset,
-      order:[["invoiceId","DESC"]]
+      order,
+      
     })
+  
      res.status(200).json({ total:count,page:page,perPage:limit,totalPage:Math.ceil(count/limit),invoices:rows });
-  }
+  
    
   } catch (err) {
     console.log(err);

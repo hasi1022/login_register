@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { Invoice, Items } from '../model/invoice.model';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable"
+import { debounce, debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
@@ -25,13 +26,24 @@ export class DashboardComponent {
   grandTotal:'DESC'|'AESC'='AESC';
   searchInvoice:any;
   copyInvoices:any;
+  private search=new Subject<String>();
   
   
   constructor(private router:Router,private authservice:AuthService){
    this.loadInvoices(this.currentPage)
+
+   this.search.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(text => this.authservice.dashboard(1,null,text))
+  ).subscribe({
+    next:(res)=>{this.result=res; this.totalPage=res.totalPage; this.perPage=res.perPage},
+    error:(err)=>{this.err=err}
+  })
+
   }
     loadInvoices(page:number){
-      this.authservice.dashboard(page,null).subscribe({
+      this.authservice.dashboard(page,null,null).subscribe({
          next:(res)=>{this.result=res; this.currentPage=res.page;this.totalPage=res.totalPage;this.copyInvoices=res.invoices},
          error:(err)=>{this.err=err}
       })
@@ -98,7 +110,7 @@ doc.save(`Invoice_${invoice.invoiceId}.pdf`);
     deleteBtn(invoice:any){
         this.authservice.delete(invoice).subscribe({
           next:(res)=>{this.del="delete succesfull";
-            this.authservice.dashboard(this.currentPage,null).subscribe({    
+            this.authservice.dashboard(this.currentPage,null,null).subscribe({    
               next: (res) =>  this.result=res
                     })
           },
@@ -113,13 +125,13 @@ doc.save(`Invoice_${invoice.invoiceId}.pdf`);
         this.grandTotal="AESC";
       }
       
-      this.authservice.dashboard(this.currentPage,this.grandTotal).subscribe({
+      this.authservice.dashboard(this.currentPage,this.grandTotal,null).subscribe({
         next:(res)=>{this.result=res;this.perPage=res.perPage; this.totalPage=res.totalPage},
         error:(err)=>{this.err=err}
       }
       )
     }
-    search(event:any){
+    searchFrontend(event:any){
         const text=event.target.value.toLowerCase();
         if(!text){
           this.loadInvoices(this.currentPage)
@@ -130,5 +142,9 @@ doc.save(`Invoice_${invoice.invoiceId}.pdf`);
         )
         }
                 
+    }
+    searchBackend(event:any){
+         const text=event.target.value.toLowerCase();
+         this.search.next(text)
     }
 }

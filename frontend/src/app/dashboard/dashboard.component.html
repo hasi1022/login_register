@@ -4,7 +4,8 @@
     <button (click)="onLogout()">Logout</button>
     <button (click)="create()">Create Invoice</button>
     <button (click)="grandTotalSort()" >Grant total {{grandTotal}}</button>
- <input type="text" placeholder="Search billTo...."  (input)="search($event)" class="search-box" />      
+ <input type="text" placeholder="Search billTo...."  (input)="searchFrontend($event)" class="search-box" />  
+ <input type="text" placeholder="search billTo...." (input)="searchBackend($event)" class="search-box" />    
   </div>
 
   <!-- Check invoices exist -->
